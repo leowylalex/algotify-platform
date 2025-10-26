@@ -34,7 +34,7 @@ export function AvatarProvider({ children }: AvatarProviderProps) {
         
         clearTimeout(timeoutId);
         setIsAvatarAvailable(true);
-      } catch (error) {
+      } catch {
         setIsAvatarAvailable(false);
         // If avatar becomes unavailable, switch back to text mode
         if (isAvatarMode) {

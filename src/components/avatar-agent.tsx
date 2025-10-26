@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Loader2Icon } from "lucide-react";
 
 interface AvatarMessage {
@@ -35,7 +35,7 @@ export const AvatarAgent = ({
   const [isConnected, setIsConnected] = useState(false);
 
   // Send messages to the avatar iframe
-  const sendToAvatar = (message: AvatarMessage) => {
+  const sendToAvatar = useCallback((message: AvatarMessage) => {
     if (iframeRef.current?.contentWindow && isConnected) {
       try {
         iframeRef.current.contentWindow.postMessage(
@@ -47,7 +47,7 @@ export const AvatarAgent = ({
         onError?.("Failed to communicate with avatar");
       }
     }
-  };
+  }, [isConnected, onError]);
 
   // Handle messages from the avatar iframe
   useEffect(() => {
@@ -94,7 +94,7 @@ export const AvatarAgent = ({
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [projectId, onMessage, onError, isConnected]);
+  }, [projectId, onMessage, onError, sendToAvatar]);
 
   // Unused functions - they exist for potential external use via AvatarAgentRef
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
