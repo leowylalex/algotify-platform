@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AlertTriangle, Clock, CheckCircle, XCircle } from "lucide-react";
 
@@ -165,7 +165,7 @@ export function ApprovalsSection({ projectId }: ApprovalsSectionProps) {
                 <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">No pending approvals</h3>
                 <p className="text-muted-foreground">
-                  All errors are either resolved or don't require approval.
+                  All errors are either resolved or don&apos;t require approval.
                 </p>
               </CardContent>
             </Card>

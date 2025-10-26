@@ -34,6 +34,21 @@ export const AvatarAgent = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
 
+  // Send messages to the avatar iframe
+  const sendToAvatar = (message: AvatarMessage) => {
+    if (iframeRef.current?.contentWindow && isConnected) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify(message),
+          "http://127.0.0.1:5501"
+        );
+      } catch (error) {
+        console.error("Error sending message to avatar:", error);
+        onError?.("Failed to communicate with avatar");
+      }
+    }
+  };
+
   // Handle messages from the avatar iframe
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -79,24 +94,10 @@ export const AvatarAgent = ({
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [projectId, onMessage, onError]);
+  }, [projectId, onMessage, onError, isConnected]);
 
-  // Send messages to the avatar iframe
-  const sendToAvatar = (message: AvatarMessage) => {
-    if (iframeRef.current?.contentWindow && isConnected) {
-      try {
-        iframeRef.current.contentWindow.postMessage(
-          JSON.stringify(message),
-          "http://127.0.0.1:5501"
-        );
-      } catch (error) {
-        console.error("Error sending message to avatar:", error);
-        onError?.("Failed to communicate with avatar");
-      }
-    }
-  };
-
-  // Expose method to speak to avatar
+  // Unused functions - they exist for potential external use via AvatarAgentRef
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const speakToAvatar = (content: string, isProcessing = false) => {
     sendToAvatar({
       type: "speak",
@@ -105,7 +106,7 @@ export const AvatarAgent = ({
     });
   };
 
-  // Expose method to send processing state
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setProcessingState = (isProcessing: boolean) => {
     sendToAvatar({
       type: "process",

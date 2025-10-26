@@ -15,7 +15,7 @@ interface AgentState {
 }
 
 // Enhanced error analysis function
-async function analyzeError(errorData: any) {
+async function analyzeError(errorData: unknown) {
   const errorAnalysisAgent = createAgent({
     name: "error-analyzer",
     client: openai({
@@ -42,7 +42,7 @@ async function analyzeError(errorData: any) {
 }
 
 // Enhanced fix generation function
-async function generateFix(errorAnalysis: any, errorData: any) {
+async function generateFix(errorAnalysis: unknown, errorData: unknown) {
   const fixGenerationAgent = createAgent({
     name: "fix-generator",
     client: openai({
@@ -68,7 +68,7 @@ async function generateFix(errorAnalysis: any, errorData: any) {
 }
 
 // Enhanced error handling function
-async function handleError(error: any, context: any, projectId: string) {
+async function handleError(error: unknown, context: unknown, projectId: string) {
   try {
     // Create error message first
     const errorMessage = await prisma.message.create({

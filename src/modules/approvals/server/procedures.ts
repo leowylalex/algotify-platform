@@ -6,7 +6,7 @@ import { prisma } from "@/lib/db";
 import { protectedProcedure, createTRPCRouter } from "@/trpc/init";
 
 // Execute a proposed fix
-async function executeProposedFix(proposedFix: any, sandboxId?: string) {
+async function executeProposedFix(proposedFix: { fixData: { type: string; commands?: string[]; files?: Array<{ path: string; content: string }> } }, sandboxId?: string) {
   try {
     const fixData = proposedFix.fixData;
 

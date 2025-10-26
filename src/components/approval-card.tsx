@@ -69,7 +69,6 @@ const statusIcons = {
 
 export function ApprovalCard({ proposedFix, onApprove, onReject, isLoading }: ApprovalCardProps) {
   const [feedback, setFeedback] = useState("");
-  const [showDetails, setShowDetails] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const CategoryIcon = categoryIcons[proposedFix.errorLog.category as keyof typeof categoryIcons];
